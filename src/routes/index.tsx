@@ -60,7 +60,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to="/signin" replace />,
+    element: <PublicRoute><SignIn /></PublicRoute>,
   },
   {
     path: '/signin',
