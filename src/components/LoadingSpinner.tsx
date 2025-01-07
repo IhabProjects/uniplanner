@@ -1,15 +1,19 @@
 import { motion } from 'framer-motion';
 
-export const LoadingSpinner = () => {
-  console.log('LoadingSpinner rendering'); // Debug log
+interface LoadingSpinnerProps {
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export const LoadingSpinner = ({ size = 'md' }: LoadingSpinnerProps) => {
+  const sizeClasses = {
+    sm: 'w-4 h-4',
+    md: 'w-8 h-8',
+    lg: 'w-12 h-12'
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-notion-background">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-        className="w-16 h-16 border-4 border-notion-border border-t-notion-primary rounded-full"
-      />
-      <div className="ml-4 text-notion-text">Loading...</div>
+    <div className="flex justify-center items-center">
+      <div className={`animate-spin rounded-full border-t-2 border-b-2 border-gray-900 ${sizeClasses[size]}`}></div>
     </div>
   );
 };

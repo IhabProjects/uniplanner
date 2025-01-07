@@ -4,13 +4,16 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getUserData } from '../services/firebase';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const SignIn = () => {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
+      setLoading(true);
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
@@ -25,6 +28,8 @@ const SignIn = () => {
     } catch (err: any) {
       console.error("Sign-in error:", err);
       setError(`Sign-in error: ${err.message || 'Unknown error occurred'}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,14 +56,23 @@ const SignIn = () => {
         <div className="mt-8">
           <button
             onClick={handleGoogleSignIn}
-            className="w-full flex justify-center items-center px-4 py-2 border border-notion-border rounded-md shadow-sm text-sm font-medium text-notion-text bg-white hover:bg-notion-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-notion-primary"
+            disabled={loading}
+            className={`w-full flex justify-center items-center px-4 py-2 border border-notion-border rounded-md shadow-sm text-sm font-medium text-notion-text bg-white hover:bg-notion-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-notion-primary ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            <img
-              src="https://www.google.com/favicon.ico"
-              alt="Google"
-              className="w-5 h-5 mr-2"
-            />
-            Sign in with Google
+            {loading ? (
+              <LoadingSpinner size="sm" />
+            ) : (
+              <>
+                <img
+                  src="https://www.google.com/favicon.ico"
+                  alt="Google"
+                  className="w-5 h-5 mr-2"
+                />
+                Sign in with Google
+              </>
+            )}
           </button>
         </div>
       </motion.div>
