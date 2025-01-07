@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply h-full bg-gray-50;
+  }
+  body {
+    @apply h-full antialiased text-gray-800;
+  }
+  #root {
+    @apply h-full;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200 ease-in-out;
+  }
+  .nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium;
+  }
+  .nav-link-active {
+    @apply bg-indigo-50 text-indigo-600;
+  }
+  .nav-link-inactive {
+    @apply text-gray-600 hover:bg-gray-50;
+  }
+}
